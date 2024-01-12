@@ -20,11 +20,11 @@ type res2 = TSignatureFuncType<typeof foo>
 //Створіть тип, який об'єднує властивості двох об'єктів тільки в тому випадку, якщо їхні значення мають спільний тип. 
 //Наприклад: { a: number; b: string } та { b: string; c: boolean } => { b: string; }
 
-type TUniting <T, U> = K in keyof T & typeof T[K] extends K in U & typeof U[K] ? {K: T[K]} : never
+type TUniting <T, U> = {[K in Extract<keyof T, keyof U>]: T[K] extends U[K] ? T[K] : never};
 
 type TUniting1 = {b: string; a: number; }
 type TUniting2 = {b: string; c: boolean}
 
 const checkingForUnity:TUniting<TUniting1, TUniting2> = {
-    b: 'lol',
+    b: 'lol'
 }
